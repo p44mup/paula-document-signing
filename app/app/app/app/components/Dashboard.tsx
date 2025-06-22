@@ -1,12 +1,15 @@
 'use client'
 
 import { useState } from 'react'
-import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
-import { FileText, Upload, Users, Settings, LogOut, CheckCircle } from 'lucide-react'
+import { createClient } from '@supabase/supabase-js'
+import { FileText, Upload, Users, LogOut, CheckCircle } from 'lucide-react'
 
-export default function Dashboard() {
-  const supabase = useSupabaseClient()
-  const user = useUser()
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
+
+export default function Dashboard({ session }: { session: any }) {
   const [activeTab, setActiveTab] = useState('documents')
 
   const handleSignOut = async () => {
